@@ -1,0 +1,82 @@
+#include <eosiolib/eosio.hpp>
+#include <eosiolib/print.hpp>
+#include <string>
+using namespace eosio;
+using std::string;
+class Table2 : public eosio::contract {
+  public:
+      using contract::contract;
+/// @abi table books i64
+     
+struct book{
+account_name bname;
+string author_name;
+uint64_t id;
+account_name primary_key() const {return bname;}
+EOSLIB_SERIALIZE(book,(bname)(author_name)(id))
+
+};
+typedef eosio::multi_index<N(books),book> book_table;
+
+ /// @abi action
+ void create(const account_name bname,string& author_name, uint64_t id)
+{
+
+require_auth(bname);
+book_table book(_self,_self);
+auto itr=book.find(bname);
+if(itr==book.end())
+{
+print("already existing account here");
+}
+book.emplace(bname,[&] (auto& b)
+{
+b.bname=bname;
+b.author_name=author_name;
+b.id=id;
+});
+print("proifle created hello");
+}
+
+ /// @abi action
+void update(const account_name bname,string& author_name, uint64_t id)
+{
+
+require_auth(bname);
+book_table book(_self,_self);
+auto itr=book.find(bname);
+if(itr!=book.end())
+{
+print("no existing account here");
+}
+book.modify(itr,bname,[&] (auto& b)
+{
+
+b.author_name=author_name;
+b.id=id;
+});
+print(name{bname},"proifle modify hello");
+}
+
+/// @abi action
+void remove(const account_name bname)
+{
+
+require_auth(bname);
+book_table book(_self,_self);
+auto itr=book.find(bname);
+if(itr!=book.end())
+{
+print("no existing account here");
+}
+book.erase(itr);
+print(name{bname},"proifle deleted");
+}
+
+};
+
+
+EOSIO_ABI( Table2, (create)(update)(remove) )
+
+
+
