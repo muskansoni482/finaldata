@@ -18,7 +18,7 @@
     "rimraf": "^2.6.3"
   },
   "dependencies": {
-    "axios": "^0.18.0",
+    "axios": "^0.21.1",
     "bitcoin-core": "^2.0.0",
     "circular-json": "^0.5.9",
     "cors": "^2.8.5",
