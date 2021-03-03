@@ -28,7 +28,7 @@
     "ipfs": "^0.35.0",
     "mongoose": "^5.5.1",
     "multer": "^1.4.1",
-    "pug": "^2.0.3",
+    "pug": "^3.0.1",
     "pull-file-reader": "^1.0.2",
     "raven": "^2.6.4",
     "ravencoin-core": "^1.2.2",
